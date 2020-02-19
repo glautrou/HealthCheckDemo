@@ -3,7 +3,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using HealthCheckDemo.HealthChecks;
+using HealthChecks.UI.Client;
 using Microsoft.AspNetCore.Builder;
+using Microsoft.AspNetCore.Diagnostics.HealthChecks;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
 using Microsoft.Extensions.Configuration;
@@ -31,6 +33,8 @@ namespace HealthCheckDemo
                 .AddCheck<EvenSecondHealthCheck>("even_second")
                 .AddUrlGroup(new Uri("https://webnet.fr/"), "Webnet", HealthStatus.Degraded);
             //.AddSqlServer("MyConnectionStrings");
+
+            services.AddHealthChecksUI();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -66,6 +70,7 @@ namespace HealthCheckDemo
                     pattern: "{controller=Home}/{action=Index}/{id?}");
 
                 endpoints.MapHealthChecks("/health");
+                endpoints.MapHealthChecksUI();
             });
         }
     }
