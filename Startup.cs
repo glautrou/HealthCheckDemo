@@ -31,7 +31,7 @@ namespace HealthCheckDemo
 
             services.AddHealthChecks()
                 .AddCheck<EvenSecondHealthCheck>("even_second")
-                .AddUrlGroup(new Uri("https://webnet.fr/"), "Webnet", HealthStatus.Degraded);
+                .AddUrlGroup(new Uri("https://webnet.fr/"), "Webnet", HealthStatus.Degraded, new[] { "url" });
             //.AddSqlServer("MyConnectionStrings");
 
             services.AddHealthChecksUI();
@@ -60,6 +60,11 @@ namespace HealthCheckDemo
             app.UseHealthChecks("/health", new HealthCheckOptions
             {
                 Predicate = _ => true,
+                ResponseWriter = UIResponseWriter.WriteHealthCheckUIResponse
+            });
+            app.UseHealthChecks("/health-url", new HealthCheckOptions
+            {
+                Predicate = (check) => check.Tags.Contains("url"),
                 ResponseWriter = UIResponseWriter.WriteHealthCheckUIResponse
             });
 
