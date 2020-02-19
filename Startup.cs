@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using HealthCheckDemo.HealthChecks;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
@@ -25,7 +26,8 @@ namespace HealthCheckDemo
         {
             services.AddControllersWithViews();
 
-            services.AddHealthChecks();
+            services.AddHealthChecks()
+                .AddCheck<EvenSecondHealthCheck>("even_second");
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
