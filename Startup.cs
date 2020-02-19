@@ -29,7 +29,8 @@ namespace HealthCheckDemo
 
             services.AddHealthChecks()
                 //.AddCheck<EvenSecondHealthCheck>("even_second")
-                .AddUrlGroup(new Uri("https://webnet.fr/"), "Webnet", HealthStatus.Degraded);
+                //.AddUrlGroup(new Uri("https://webnet.fr/"), "Webnet", HealthStatus.Degraded)
+                .AddSqlServer("MyConnectionStrings");
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
