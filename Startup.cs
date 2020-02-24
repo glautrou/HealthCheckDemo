@@ -34,7 +34,8 @@ namespace HealthCheckDemo
                 .AddUrlGroup(new Uri("https://webnet.fr/"), "Webnet", HealthStatus.Degraded, new[] { "url" })
                 //.AddSqlServer("MyConnectionStrings");
                 .AddFileExistsHealthCheck(@"PathToFile", "My File", HealthStatus.Degraded, new[] { "server" })
-                .AddDirectoryExistsHealthCheck(@"PathToFolder", "My folder", HealthStatus.Degraded, new[] { "server" });
+                .AddDirectoryExistsHealthCheck(@"PathToFolder", "My folder", HealthStatus.Degraded, new[] { "server" })
+                .AddWindowsScheduledTaskHealthCheck("Scheduled task path", "Machine", "Username", "Password", "Domain", "My job", HealthStatus.Degraded, new[] { "application" });
 
             services.AddHealthChecksUI();
         }
