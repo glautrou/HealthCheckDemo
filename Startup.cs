@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net;
 using System.Threading.Tasks;
 using HealthCheckDemo.HealthChecks;
 using HealthChecks.UI.Client;
@@ -12,6 +13,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Diagnostics.HealthChecks;
 using Microsoft.Extensions.Hosting;
+using NetTools;
 
 namespace HealthCheckDemo
 {
@@ -59,6 +61,9 @@ namespace HealthCheckDemo
             app.UseRouting();
 
             app.UseAuthorization();
+
+            //Check if allowed (IP-restricted)
+            app.UseHealthCheckRestrictMiddleware();
 
             app.UseHealthChecks("/health", new HealthCheckOptions
             {
