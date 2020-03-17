@@ -77,6 +77,8 @@ namespace HealthCheckDemo.HealthChecks
                             result = HealthCheckResult.Unhealthy("Task not found");
                         else if (!task.Enabled)
                             result = HealthCheckResult.Degraded("Task is disabled since " + task.LastRunTime.ToString("g"));
+                        else if (task.IsActive)
+                            result = HealthCheckResult.Healthy("Running since " + task.LastRunTime.ToString("g"));
                         else if (task.LastTaskResult != 0)
                             result = HealthCheckResult.Degraded("Error during last run: " + task.LastRunTime.ToString("g"));
                         else
